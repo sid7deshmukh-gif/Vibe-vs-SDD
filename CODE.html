@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reports Page</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    button { margin-top: 20px; padding: 10px 20px; 
+             background: green; color: white; 
+             border: none; cursor: pointer; }
+  </style>
+</head>
+<body>
 
+  <h1>Reports Page</h1>
+
+  <table id="reportTable">
+    <tr><th>Name</th><th>Sales</th><th>Region</th></tr>
+    <tr><td>Alice</td><td>500</td><td>North</td></tr>
+    <tr><td>Bob</td><td>300</td><td>South</td></tr>
+    <tr><td>Charlie</td><td>700</td><td>East</td></tr>
+  </table>
+
+  <button onclick="exportCSV()">Export CSV</button>
+
+  <script>
+    function exportCSV() {
+      const rows = document.querySelectorAll("#reportTable tr");
+      let csv = "";
+      rows.forEach(row => {
+        const cols = row.querySelectorAll("th, td");
+        const rowData = Array.from(cols).map(c => c.innerText).join(",");
+        csv += rowData + "\n";
+      });
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "report-2026-05-25.csv";
+      a.click();
+    }
+  </script>
+
+</body>
+</html>
